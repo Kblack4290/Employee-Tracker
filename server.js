@@ -1,7 +1,8 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-
+const chalk = require('chalk')
+const figlet =require('figlet')
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -16,6 +17,19 @@ const connection = mysql.createConnection({
     password: 'rootroot',
     database: 'company_DB',
 });
+
+const figletText = () => {
+
+    console.log(chalk.bold.blueBright(figlet.textSync('Employee Tracker!!\n',{
+        font: 'speed',
+        horizontalLayout: 'default',
+    verticalLayout: 'default',
+    width: 80,
+    whitespaceBreak: true
+    })));
+}
+
+figletText();
 
 const start = () => {
 
