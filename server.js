@@ -22,8 +22,8 @@ const start = () => {
     inquirer
         .prompt({
             name: 'menu',
-            type:'rawlist',
-            message:'What would you like to do?',
+            type: 'rawlist',
+            message: 'What would you like to do?',
             choices: [
                 'View department',
                 'View employees',
@@ -35,7 +35,7 @@ const start = () => {
             ]
         })
         .then((val) => {
-            switch(val.menu) {
+            switch (val.menu) {
                 case 'View department':
                     viewDepartment();
                     break;
@@ -55,7 +55,7 @@ const start = () => {
                 case 'Add employee':
                     addEmployee();
                     break;
-                                
+
                 case 'Add role':
                     addRole();
                     break;
@@ -63,50 +63,137 @@ const start = () => {
                 case 'Update employee':
                     addRole();
                     break;
+                default:
+                    connection.end();
+                    break;
             }
-        }) 
+        })
 }
 
 const viewDepartment = () => {
+    
+    console.log('Viewing all departments . . .\n');
+    const query = 'SELECT * FROM departments'
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        start();
+    })
+}; 
+
+
+const viewEmployees = () => {
+    console.log('Viewing all employees . . .\n');
+    const query = 'SELECT * FROM company_db.employees' 
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        start();
+    })
+};
+
+const viewRoles = () => {
+    console.log('Viewing employees roles . . .\n');
+    const query = 'SELECT * FROM company_db.roles'
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        start();
+    })
+};
+
+const addDepartment = () => {
+    console.log('Adding a new department. . .\n');
+
     inquirer
-        .prompt({
-            name: 'department',
-            type:'list',
-            message: 'Please select a department',
-            choices:[
-                'sales',
-                'engineering',
-                'finance',
-                'legal',
-            ]
-        }) .then((val) =>{
-            const query = 'SELECT * FROM company_db.departments'
-            connection.query(query, {departments: val.department}, (err, res) => {
-                if(err) throw err;
+        .prompt([{
+            name: 'addDepartment',
+            type: 'input',
+            message: 'Please enter the department name',
+        }])
+        .then((val) => {
+            const query = 'INSERT INTO departments SET?'
+            connection.query(query, { name: val.addDepartment }, (err, res) => {
+                if (err) throw err;
                 console.table(res);
                 start();
             })
-        }); 
+        })
 }
 
-const viewEmployees = () => {
+const addEmployee = () => {
+    console.log('Adding a new employee. . .\n');
 
-            const query = 'SELECT * FROM company_db.employees'
-            connection.query(query, (err, res) => {
-                if(err) throw err;
+    inquirer
+        .prompt([
+            {
+            name: 'firstName',
+            type: 'input',
+            message: 'Please enter the new employees first name',
+        },
+
+        {
+            name: 'lastName',
+            type: 'input',
+            message: 'Please enter the new employees last name',
+        },
+
+        {
+            name: 'roleId',
+            type: 'input',
+            message: 'What is the new employees role is?',
+        },
+
+        {
+            name: 'managerId',
+            type: 'input',
+            message: 'What is the Manager Id?',
+        },
+    
+    
+    ])
+        .then((val) => {
+            const query = 'INSERT INTO employees SET?'
+            connection.query(query, { first_name: val.firstName, last_name: val.lastName, role_id: val.roleId, manager_id: val.managerId }, (err, res) => {
+                if (err) throw err;
                 console.table(res);
-                // start();
+                start();
             })
-        };
-
-    const viewRoles = () => {
-
-        const query = 'SELECT * FROM company_db.roles'
-        connection.query(query, (err, res) => {
-            if(err) throw err;
-            console.table(res);
-            // start();
         })
-    };
+}
+
+const addRole = () => {
+    console.log('Adding an employee role. . .\n');
+
+    inquirer
+        .prompt([
+            {
+            name: 'title',
+            type: 'input',
+            message: 'Please enter the employee title',
+        },
+
+        {
+            name: 'salary',
+            type: 'input',
+            message: 'What is the salary of this title?',
+        },
+
+        {
+            name: 'departmentId',
+            type: 'input',
+            message: 'What is the department Id of this title?',
+        },
+    
+    ])
+        .then((val) => {
+            const query = 'INSERT INTO roles SET?'
+            connection.query(query, { title: val.title, salary: val.salary, department_id: val.departmentId }, (err, res) => {
+                if (err) throw err;
+                console.table(res);
+                start();
+            })
+        })
+}
 
 start();
