@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     host: 'localhost',
 
     // Your port; if not 3306
-    port: 3306,
+    port: process.env.PORT || 3306,
 
     // Your username
     user: 'root',
@@ -18,6 +18,7 @@ const connection = mysql.createConnection({
     database: 'company_DB',
 });
 
+// designed text for header 
 const figletText = () => {
 
     console.log(chalk.bold.blueBright(figlet.textSync('Employee Tracker!!\n', {
@@ -31,6 +32,7 @@ const figletText = () => {
 
 figletText();
 
+// start function and switch statement to start the menu
 const start = () => {
 
     inquirer
@@ -84,6 +86,7 @@ const start = () => {
         })
 }
 
+// View the departments that already exist
 const viewDepartment = () => {
 
     console.log('Viewing all departments . . .\n');
@@ -95,7 +98,7 @@ const viewDepartment = () => {
     })
 };
 
-
+// View current employees
 const viewEmployees = () => {
     console.log('Viewing all employees . . .\n');
     const query = 'SELECT * FROM company_db.employees'
@@ -106,6 +109,7 @@ const viewEmployees = () => {
     })
 };
 
+//view current roles and their salaries
 const viewRoles = () => {
     console.log('Viewing employee roles . . .\n');
     const query = 'SELECT * FROM company_db.roles'
@@ -116,6 +120,7 @@ const viewRoles = () => {
     })
 };
 
+// to add a new department
 const addDepartment = () => {
     console.log('Adding a new department. . .\n');
 
@@ -135,6 +140,7 @@ const addDepartment = () => {
         })
 }
 
+// to add a new employee
 const addEmployee = () => {
     console.log('Adding a new employee. . .\n');
 
@@ -176,6 +182,7 @@ const addEmployee = () => {
         })
 }
 
+// to add a new role
 const addRole = () => {
     console.log('Adding an employee role. . .\n');
 
@@ -209,7 +216,7 @@ const addRole = () => {
             })
         })
 }
-
+//to update an employees role
 const updateEmployee = () => {
     console.log('Updating employee role . . . \n');
 
