@@ -13,6 +13,8 @@ manager_id INTEGER NULL,
 PRIMARY KEY (id)
 );
 
+
+
 CREATE TABLE roles (
 id INT NOT NULL AUTO_INCREMENT,
 title VARCHAR(30) NOT NULL,
@@ -28,4 +30,8 @@ PRIMARY KEY (id)
 );
 
 ALTER TABLE departments AUTO_INCREMENT = 1001;
+
+
+
+
 
