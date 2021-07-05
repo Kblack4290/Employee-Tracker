@@ -26,6 +26,11 @@ Copy the schema.sql into your MySQL workbench to create the database. Once that 
 
 https://drive.google.com/file/d/1kx8xuE1GBOhkkGJUMPoVNVA31bC1IRgH/view
 
+
+![Terminal](./Assets/start.png)
+
+![Terminal](./Assets/name.png)
+
 ## License 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
